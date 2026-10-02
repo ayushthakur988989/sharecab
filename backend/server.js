@@ -16,13 +16,14 @@ dotenv.config();
 const app = express();
 const httpServer = createServer(app);
 
-// CORS — support local frontend & dev tools seamlessly
+// CORS — support Vercel frontend, mobile browsers, and dev tools seamlessly
 app.use(cors({
-  origin: true,
-  credentials: true,
+  origin: '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
 }));
+app.options('*', cors());
+
 
 // Socket.IO Server
 const io = new Server(httpServer, {
